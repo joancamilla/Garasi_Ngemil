@@ -18,8 +18,9 @@ function setup() {
 
 }
 
-function fillGrid(n) {
-  var numCols = Math.ceil (n/2);
+function fillGrid(a, b) {
+  // var numCols = Math.ceil (garasingemil.getString(rowIndex,8)/2);
+  var numCols = Math.ceil (a + b/2);
   var numRows = numCols;
   var rectW = width / numCols;
   var rectH = height/ numRows;
@@ -33,18 +34,24 @@ function fillGrid(n) {
     }
   }
 
-  while (n >0) {
+  while (a + b >0) {
     for (var i = 0; i < numCols; i++) {
       for (var j = 0; j < numRows; j++) {
         noFill();
         rect(i*rectW, j*rectH, rectW, rectH);
         if ((random(1) < .1) && (grids[i][j] == false)) {
-          fill(0);
-          arc(i*rectW + rectW/2, j*rectH + rectH, rectW, rectH, PI, TWO_PI);
-          n -= 1;
+          var shape = Math.floor(Math.random() * Math.floor(2));
+          if (shape == 0 && a > 0){
+            fill(150);
+            arc(i*rectW + rectW/2, j*rectH + rectH, rectW, rectH, PI, TWO_PI);
+            a -= 1;
+          } else if (shape ==1 && b > 0) {
+            fill(0);
+            arc(i*rectW + rectW/2, j*rectH + rectH, rectW, rectH, PI, TWO_PI);
+            b -= 1;
+          }
           grids[i][j] = true; // when its filled, set it to true
         }
-        if (n==0) return;
       }
     }
   }
@@ -73,15 +80,19 @@ function draw() {
     // text(`Name: ${name}\n${phone}\n${address}`, 300, 400)
     pop();
 
-    var n = 10;
-    fillGrid(n);
+    // var n = garasingemil.getString(rowIndex,8);
+    var a = 5;
+    var b = 3;
+    // var n = 100;
+    fillGrid(a, b);
   	noLoop();
 }
 
-function mousePressed () {
-  rowIndex++;
-  if (rowIndex >= orders.getRowCount()) {
-    rowIndex = 0;
-
-  }
-}
+//not working due to noLoop();
+// function mousePressed () {
+//   rowIndex++;
+//   if (rowIndex >= orders.getRowCount()) {
+//     rowIndex = 0;
+  //
+  // }
+// }
