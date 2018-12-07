@@ -1,8 +1,10 @@
 var rowIndex = 0;
+var name, phone, address, totalorder;
+var bread, donuts, brownies;
 
 function preload() {
-  // orders = loadTable ("../addons/order-data.csv", "csv","header");
-  garasingemil = loadTable ("https://docs.google.com/spreadsheets/d/e/2PACX-1vSU6-y-YdVAONlwj8rPzcKEw_oTCuHB5mjxC-Tghn5NxWdaWdbyEYkBXAutBaWE70BN3IS5i2Nzg_yy/pub?output=csv", "csv","header");
+  garasingemil = loadTable ("../addons/order-data.csv", "csv","header");
+  // garasingemil = loadTable ("https://docs.google.com/spreadsheets/d/e/2PACX-1vSU6-y-YdVAONlwj8rPzcKEw_oTCuHB5mjxC-Tghn5NxWdaWdbyEYkBXAutBaWE70BN3IS5i2Nzg_yy/pub?output=csv", "csv","header");
   title = loadFont('../addons/curse-casual.ttf');
   info = loadFont('../addons/Roboto-Light.ttf');
   totalOrder = loadFont('../addons/RobotoCondensed-Bold.ttf');
@@ -15,12 +17,23 @@ function setup() {
   // colorMode (HSB);
   textAlign(CENTER);
   // console.log(table.getColumn("name"));
+  name = garasingemil.getString(rowIndex,0);
+  phone = garasingemil.getString(rowIndex,1);
+  address = garasingemil.getString(rowIndex,2);
+  totalorder = garasingemil.getString(rowIndex,7);
+  // bread = garasingemil.getString(rowIndex,6);
+  // donuts = garasingemil.getString (rowIndex, 4);
+  // brownies = garasingemil.getString(rowIndex,3);
 
+  bread = 1;
+  donuts = 20;
+  brownies = 5;
 }
 
-function fillGrid(a, b) {
+function fillGrid(bread, donuts, brownies) {
   // var numCols = Math.ceil (garasingemil.getString(rowIndex,8)/2);
-  var numCols = Math.ceil (a + b/2);
+  var n = bread + donuts + brownies;
+  var numCols = Math.ceil (n/3);
   var numRows = numCols;
   var rectW = width / numCols;
   var rectH = height/ numRows;
@@ -34,21 +47,33 @@ function fillGrid(a, b) {
     }
   }
 
-  while (a + b >0) {
+  while (bread + donuts + brownies) {
     for (var i = 0; i < numCols; i++) {
       for (var j = 0; j < numRows; j++) {
-        noFill();
-        rect(i*rectW, j*rectH, rectW, rectH);
+        // noFill();
+        // rect(i*rectW, j*rectH, rectW, rectH);
         if ((random(1) < .1) && (grids[i][j] == false)) {
-          var shape = Math.floor(Math.random() * Math.floor(2));
-          if (shape == 0 && a > 0){
-            fill(150);
+          var shape = Math.floor(Math.random() * Math.floor(3));
+          if (shape == 0 && bread){
+            noStroke();
+            fill(213,31,38);
             arc(i*rectW + rectW/2, j*rectH + rectH, rectW, rectH, PI, TWO_PI);
-            a -= 1;
-          } else if (shape ==1 && b > 0) {
-            fill(0);
-            arc(i*rectW + rectW/2, j*rectH + rectH, rectW, rectH, PI, TWO_PI);
-            b -= 1;
+            console.log('bread ' + bread);
+            bread -= 1;
+          }
+          if (shape ==1 && donuts) {
+            noStroke();
+            fill(158,184,59);
+            ellipse (i*rectW + rectW/2 -10,j*rectH + rectH /2 -10, rectW);
+            console.log('donuts ' + donuts);
+            donuts -= 1;
+          }
+          if (shape ==2 && brownies) {
+            noStroke();
+            fill(250,163,31);
+            rect (i*rectW - 10,j*rectH + rectH/5 - 10, rectW, rectH/2,5);
+            console.log('brownies ' + brownies);
+            brownies -= 1;
           }
           grids[i][j] = true; // when its filled, set it to true
         }
@@ -59,15 +84,22 @@ function fillGrid(a, b) {
 
 function draw() {
   // put drawing code here
-  background (205);
-  var name = garasingemil.getString(rowIndex,0);
-  var phone = garasingemil.getString(rowIndex,1);
-  var address = garasingemil.getString(rowIndex,2);
-  var totalorder = garasingemil.getString(rowIndex,7);
+  background (249,242,236);
 
-  rect(70,360,550,340);
+    // var n = garasingemil.getString(rowIndex,8);
+
+    // var n = 100;
+    fillGrid(bread, donuts, brownies);
+    drawLabel();
+  	noLoop();
+
+}
+
+function drawLabel () {
+
+  // rect(70,360,550,340);
   push();
-    fill('#ED225D');
+    fill('#633118');
     textFont(title);
     textSize(65);
     text(name, 350, 450);
@@ -79,20 +111,13 @@ function draw() {
     text(totalorder,350,650);
     // text(`Name: ${name}\n${phone}\n${address}`, 300, 400)
     pop();
-
-    // var n = garasingemil.getString(rowIndex,8);
-    var a = 5;
-    var b = 3;
-    // var n = 100;
-    fillGrid(a, b);
-  	noLoop();
 }
 
 //not working due to noLoop();
-// function mousePressed () {
-//   rowIndex++;
-//   if (rowIndex >= orders.getRowCount()) {
-//     rowIndex = 0;
-  //
-  // }
-// }
+function mousePressed () {
+  rowIndex++;
+  if (rowIndex >= garasingemil.getRowCount()) {
+    rowIndex = 0;
+
+  }
+}
