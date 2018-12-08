@@ -3,12 +3,14 @@ var name, phone, address, totalorder;
 var bread, donuts, brownies;
 var cols = ["#9eb83b", "#d51f26", "#faa31f", "#a46026"];
 
+var n;
+
 function preload() {
-  garasingemil = loadTable ("../addons/order-data.csv", "csv","header");
+  garasingemil = loadTable("/addons/order-data.csv", "csv","header");
   // garasingemil = loadTable ("https://docs.google.com/spreadsheets/d/e/2PACX-1vSU6-y-YdVAONlwj8rPzcKEw_oTCuHB5mjxC-Tghn5NxWdaWdbyEYkBXAutBaWE70BN3IS5i2Nzg_yy/pub?output=csv", "csv","header");
-  title = loadFont('../addons/curse-casual.ttf');
-  info = loadFont('../addons/Roboto-Light.ttf');
-  totalOrder = loadFont('../addons/RobotoCondensed-Bold.ttf');
+  title = loadFont('/addons/curse-casual.ttf');
+  info = loadFont('/addons/Roboto-Light.ttf');
+  totalOrder = loadFont('/addons/RobotoCondensed-Bold.ttf');
 }
 
 
@@ -17,16 +19,6 @@ function setup() {
   createCanvas (750, 1000);
   // colorMode (HSB);
   textAlign(CENTER);
-  // console.log(table.getColumn("name"));
-  name = garasingemil.getString(rowIndex,0);
-  phone = garasingemil.getString(rowIndex,1);
-  address = garasingemil.getString(rowIndex,2);
-  totalorder = garasingemil.getString(rowIndex,7);
-  // bread = map(bread, 0, 100, 1, 99);
-  // bread = garasingemil.getString(rowIndex,6);
-
-  // donuts = garasingemil.getString (rowIndex, 4);
-  // brownies = garasingemil.getString(rowIndex,3);
 
   // bread = garasingemil.getString(rowIndex,6);
   // bread = map(bread, 0, 100, 1, 99);
@@ -35,14 +27,16 @@ function setup() {
   // brownies = garasingemil.getString(rowIndex,3);
   // brownies = map(brownies, 0, 100, 1, 99);
 
-  bread = 10;
-  donuts = 10;
-  brownies = 5;
+  // bread = 10;
+
+  // bread = map(bread, 0, 100, 1, 99);
+  // donuts = 5;
+  // brownies = 10 ;
 }
 
 function fillGrid(bread, donuts, brownies) {
   // var numCols = Math.ceil (garasingemil.getString(rowIndex,8)/2);
-  var n = bread + donuts + brownies;
+  // var n = bread + donuts + brownies;
   var numCols = Math.ceil (n/3);
   var numRows = numCols;
   var rectW = width / numCols;
@@ -57,7 +51,7 @@ function fillGrid(bread, donuts, brownies) {
     }
   }
 
-  while (bread + donuts + brownies) {
+while(bread + donuts + brownies > 0){
     for (var i = 0; i < numCols; i++) {
       for (var j = 0; j < numRows; j++) {
         // var newColors =map(j, 0, numCols,0,numRows.length);
@@ -68,7 +62,7 @@ function fillGrid(bread, donuts, brownies) {
           if (shape == 0 && bread){
             noStroke();
             fill(213,31,38);
-            // fill(color(cols[newColors]));
+            // fill(cols[i]);
             arc(i*rectW + rectW/2, j*rectH + rectH, rectW, rectH, PI, TWO_PI);
             // console.log('bread ' + bread);
             bread -= 1;
@@ -76,7 +70,7 @@ function fillGrid(bread, donuts, brownies) {
           if (shape ==1 && donuts) {
             noStroke();
             fill(158,184,59);
-            // fill(color(cols[newColors]));
+            // fill(cols[i]);
             ellipse (i*rectW + rectW/2 -10,j*rectH + rectH /2 -10, rectW);
             // console.log('donuts ' + donuts);
             donuts -= 1;
@@ -84,7 +78,7 @@ function fillGrid(bread, donuts, brownies) {
           if (shape ==2 && brownies) {
             noStroke();
             fill(250,163,31);
-            // fill(color(cols[newColors]));
+            // fill(cols[i]);
             rect (i*rectW - 10,j*rectH + rectH/5 - 10, rectW, rectH/2,5);
             // console.log('brownies ' + brownies);
             brownies -= 1;
@@ -97,7 +91,6 @@ function fillGrid(bread, donuts, brownies) {
 }
 
 function draw() {
-  // if (generate) {
   // put drawing code here
   background (249,242,236);
 
@@ -108,19 +101,23 @@ function draw() {
     phone = garasingemil.getString(rowIndex,1);
     address = garasingemil.getString(rowIndex,2);
     totalorder = garasingemil.getString(rowIndex,7);
+    bread = garasingemil.getNum(rowIndex,6);
+    donuts = garasingemil.getNum (rowIndex, 4);
+    brownies = garasingemil.getNum(rowIndex,3);
+
+
+    n=bread + donuts + brownies;
+
 
     fillGrid(bread, donuts, brownies);
     drawLabel();
   	noLoop();
 
-//     generate = false;
-//
-// }
 }
 
 function drawLabel () {
-
-  // rect(70,360,550,340);
+  // fill(250,163,31,35);
+  // rect(70,360,550,340,10);
   push();
     fill('#633118');
     textFont(title);
@@ -136,9 +133,10 @@ function drawLabel () {
     pop();
 }
 
-//not working due to noLoop();
+
 function mouseClicked () {
   rowIndex++;
+  print(garasingemil.getRowCount());
   if (rowIndex >= garasingemil.getRowCount()) {
     rowIndex = 0;
   }
