@@ -51,7 +51,7 @@ function fillGrid(bread, donuts, brownies) {
     }
   }
 
-while(bread + donuts + brownies > 0){
+//while(bread + donuts + brownies > 0){
     for (var i = 0; i < numCols; i++) {
       for (var j = 0; j < numRows; j++) {
         // var newColors =map(j, 0, numCols,0,numRows.length);
@@ -61,7 +61,9 @@ while(bread + donuts + brownies > 0){
           var shape = Math.floor(Math.random() * Math.floor(3));
           if (shape == 0 && bread){
             noStroke();
-            fill(213,31,38);
+            //fill(213,31,38);
+            fill(color(cols[Math.floor(random(0, 3.9))]));
+
             // fill(cols[i]);
             arc(i*rectW + rectW/2, j*rectH + rectH, rectW, rectH, PI, TWO_PI);
             // console.log('bread ' + bread);
@@ -69,7 +71,8 @@ while(bread + donuts + brownies > 0){
           }
           if (shape ==1 && donuts) {
             noStroke();
-            fill(158,184,59);
+            //fill(158,184,59);
+            fill(color(cols[Math.floor(random(0, 3.9))]));
             // fill(cols[i]);
             ellipse (i*rectW + rectW/2 -10,j*rectH + rectH /2 -10, rectW);
             // console.log('donuts ' + donuts);
@@ -77,7 +80,8 @@ while(bread + donuts + brownies > 0){
           }
           if (shape ==2 && brownies) {
             noStroke();
-            fill(250,163,31);
+//            fill(250,163,31);
+            fill(color(cols[Math.floor(random(0, 3.9))]));
             // fill(cols[i]);
             rect (i*rectW - 10,j*rectH + rectH/5 - 10, rectW, rectH/2,5);
             // console.log('brownies ' + brownies);
@@ -86,7 +90,7 @@ while(bread + donuts + brownies > 0){
           grids[i][j] = true; // when its filled, set it to true
         }
       }
-    }
+    //}
   }
 }
 
