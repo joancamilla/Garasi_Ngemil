@@ -1,7 +1,8 @@
-﻿name,phone,address,brownies,donuts,rissole,bread,total orders,total number of order
+﻿name,phone,address,brownies,donuts,rissoles,breads,total orders,total number of order
+Daniel anggrianto,(+62) 462 8863 8539,59226 Farragut Court,0,2,3,4,25 brownies,10
 Zorah Hinksen,(+62) 874 0947 284,7 Grayhawk Way,10,5,20,5,"10 brownies, 5 donuts, 20 rissole, 5 bread",40
 Domenico Lindemann,(+62) 376 9874 874,22 Rigney Way,20,40,10,20,"20 brownies, 40 donuts, 10 rissole, 20 bread",90
-Spencer McDermid,(+62) 660 6605 3097,87 Riverside Trail,0,35,0,0,35 donuts,35
+Spencer McDermid,(+62) 660 6605 3097,87 Riverside Trail,10,35,10,10,35 donuts,35
 Erl Harcourt,(+62) 690 8489 865,5718 Walton Drive,20,0,0,50,"20 brownies, 50 breads",70
 Howey Tendahl,(+62) 275 8835 386,29 Kensington Parkway,0,50,0,0,50 donuts,50
 Clemence Lisciandri,(+62) 425 6193 222,349 Leroy Way,25,15,15,0,"25 brownies, 15 donuts, 15 rissole",55
